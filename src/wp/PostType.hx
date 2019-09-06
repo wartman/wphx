@@ -6,6 +6,8 @@ import haxe.extern.EitherType;
 import wp.api.PostApi;
 import wp.api.MetaApi;
 
+using tink.CoreApi;
+
 typedef PostTypeLabels = {
   ?name:String,
   ?singular_name:String,
@@ -109,12 +111,12 @@ extern class PostTypeObject {
 @:forward
 abstract PostType(PostTypeObject) from PostTypeObject to PostTypeObject {
 
-  public inline static function add(name:String, args:NativeStructArray<Dynamic>) {
+  public static function add(name:String, args:NativeStructArray<Dynamic>):Outcome<PostType, WpError> {
     var type = PostApi.registerPostType(name, args);
     if (Std.is(type, WpError)) {
-      throw type;
+      return Failure(type);
     }
-    return type;
+    return Success(cast type);
   }
 
   public inline static function get(name:String)

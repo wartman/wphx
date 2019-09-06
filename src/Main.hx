@@ -3,6 +3,8 @@ using Lambda;
 
 import wp.api.GeneralTemplateApi;
 
+using tink.CoreApi;
+
 class Main {
 
   public static function main() {
@@ -19,9 +21,15 @@ class Main {
           'title',
           'editor'
         ]
-      }).registerMetaKey('foo', {
+      }).sure().registerMetaKey('foo', {
         type: 'string',
         show_in_rest: true
+      });
+
+      Post.add({
+        post_title: 'foo',
+        post_content: '<p>bar</p>',
+        post_type: PostType.get('foo').name
       });
 
       var posts = Post.find({
@@ -32,7 +40,7 @@ class Main {
         var p:Post = Post.add({
           'post_title': 'bar',
           'post_content': '<p>Yay!</p>'
-        }).markPublished();
+        }).sure().markPublished();
         p.addMeta('foo', 'bar');
         var foo = p.getMeta('foo');
       }

@@ -3,6 +3,9 @@ package wp;
 import php.NativeStructArray;
 import wp.api.PostApi;
 
+using tink.CoreApi;
+using wp.util.Util;
+
 @:native('WP_Post')
 extern class PostObject {
 
@@ -48,23 +51,25 @@ abstract Post(PostObject) from PostObject to PostObject {
   @:to public inline function toNativeArray():php.NativeArray
     return this.toArray();
 
-  public static inline function get(id:Int):Post
-    return PostApi.getPost(id);
+  public static function get(id:Int):Outcome<Post, WpError> {
+    var post = PostApi.getPost(id);
+    return post == null ? Failure(new WpError(404, 'No post found for ${id}')) : Success(post);
+  }
 
   // todo: make an extern for query args
   public static inline function find(args:NativeStructArray<Dynamic>) 
     return PostApi.getPosts(args);
 
-  public static function add(args:NativeStructArray<Dynamic>) {
+  public static function add(args) {
     var id = PostApi.wpInsertPost(args);
     return Post.get(id);
   }
 
   public inline function insert()
-    return PostApi.wpInsertPost(this);
+    return PostApi.wpInsertPost(this).toOutcome();
 
   public inline function update()
-    return PostApi.wpUpdatePost(this);
+    return PostApi.wpUpdatePost(this).toOutcome();
 
   public inline function remove(forceDelete:Bool = false)
     return PostApi.wpDeletePost(this.id, forceDelete);
@@ -87,7 +92,7 @@ abstract Post(PostObject) from PostObject to PostObject {
   }
 
   public inline function getMeta(key:String, ?single:Bool = true)
-    return PostApi.getPostMeta(this.id, key, single);
+    return PostApi.getPostMeta(this.id, key, single).toOutcome();
 
   public inline function addMeta(key:String, value:Dynamic, ?unique:Bool = false)
     return PostApi.addPostMeta(this.id, key, value, unique);

@@ -1,4 +1,6 @@
 -main Main
 -cp src
 
+-lib tink_core
+
 -php dist\lib

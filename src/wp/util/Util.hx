@@ -1,14 +1,13 @@
 package wp.util;
 
-#if macro
-  import haxe.macro.Expr;
-#end
+import haxe.extern.EitherType;
+import wp.WpError;
 
-using StringTools;
+using tink.CoreApi;
 
 class Util {
 
-  macro public static function buffer(e:Expr):Expr {
+  macro public static function buffer(e:haxe.macro.Expr):haxe.macro.Expr {
     return macro {
       php.Syntax.code('ob_start()');
       $e;
@@ -28,6 +27,13 @@ class Util {
     }).join('');
 
     return first + out;
+  }
+
+  public static function toOutcome<T>(either:EitherType<T, WpError>):Outcome<T, WpError> {
+    if (Std.is(either, WpError)) {
+      return Failure(either);
+    }
+    return Success(either);
   }
 
 }

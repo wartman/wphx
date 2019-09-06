@@ -129,3 +129,37 @@ extern class PostApi implements Api {
   function wp_add_trashed_suffix_to_post_name_for_trashed_posts(post_name:String, post_ID:EitherType<Int, String> = 0):Void;
   function wp_add_trashed_suffix_to_post_name_for_post(post:Post):String;
 }
+
+enum abstract PostApiOpenOrClosed(String) to String {
+  var Open = 'open';
+  var Closed = 'closed';
+}
+
+// typedef PostApiInsertPost = {
+//   ?ID:Int,
+//   ?post_author:String,
+//   ?post_date:String,
+//   ?post_date_gmt:String,
+//   ?post_content:String,
+//   ?post_content_filtered:String,
+//   ?post_title:String,
+//   ?post_excerpt:String,
+//   ?post_status:String,
+//   ?post_type:String,
+//   ?comment_status:PostApiOpenOrClosed,
+//   ?ping_status:PostApiOpenOrClosed,
+//   ?post_password:String,
+//   ?post_name:String,
+//   ?to_ping:String,
+//   ?pinged:String,
+//   ?post_modified:String,
+//   ?post_modified_gmt:String,
+//   ?post_parent:Int,
+//   ?menu_order:Int,
+//   ?post_mime_type:String,
+//   ?guid:String,
+//   ?post_category:Array<Dynamic>,
+//   ?tags_input:Array<EitherType<Int, String>>,
+//   ?tax_input:Array<Dynamic>,
+//   ?meta_input:Array<Dynamic>
+// };
