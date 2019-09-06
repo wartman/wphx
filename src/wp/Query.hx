@@ -1,10 +1,11 @@
 package wp;
 
+import php.SuperGlobal;
 import php.NativeStructArray;
 import haxe.extern.EitherType;
 
 @:native('WP_Query')
-extern class Query {
+extern class QueryObject {
   @:native('query') public var queryData:NativeStructArray<Dynamic>;
   @:native('query_vars') public var queryVars:NativeStructArray<Dynamic>;
   // @:native('tax_query') public var taxQuery:TaxQuery;
@@ -13,6 +14,7 @@ extern class Query {
   @:native('queried_object') public var queriedObject:Dynamic;
   public var request:String;
   public var posts:Array<Post>;
+  public var post:Post;
   @:native('post_count') public var postCount:Int;
   @:native('current_post') public var currentPost:Int;
   @:native('in_the_loop') public var inTheLoop:Bool;
@@ -100,4 +102,21 @@ extern class Query {
   @:native('is_main_query') public function getIsMainQuery():Bool;
   @:native('setup_postdata') public function setupPostdata(post:EitherType<Post, Int>):Bool;
   @:native('reset_postdata') public function resetPostdata():Void;
+}
+
+@:forward
+abstract Query(QueryObject) from QueryObject to QueryObject {
+  
+  public inline static function instance():Query {
+    return (SuperGlobal.GLOBALS['wp_query']:QueryObject);
+  }
+
+  public inline function new(query) {
+    this = new QueryObject(query);
+  }
+
+  public inline function iterator():Iterator<Post> {
+    return new PostIterator(this);
+  }
+
 }

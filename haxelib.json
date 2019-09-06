@@ -1,0 +1,11 @@
+{
+  "name": "wphx",
+  "license": "MIT",
+  "classPath": "src",
+  "dependencies": {
+    "tink_core": ""
+  },
+  "contributors": [ "wartman" ],
+  "releasenote": "",
+  "version": "0.0.0"
+}

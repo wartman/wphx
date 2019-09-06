@@ -1,6 +1,7 @@
 package wp;
 
 import php.NativeStructArray;
+import wp.api.PluginApi;
 import wp.api.PostApi;
 
 using tink.CoreApi;
@@ -56,6 +57,9 @@ abstract Post(PostObject) from PostObject to PostObject {
     return post == null ? Failure(new WpError(404, 'No post found for ${id}')) : Success(post);
   }
 
+  public static inline function all()
+    return PostApi.getPosts();
+
   // todo: make an extern for query args
   public static inline function find(args:NativeStructArray<Dynamic>) 
     return PostApi.getPosts(args);
@@ -64,6 +68,11 @@ abstract Post(PostObject) from PostObject to PostObject {
     var id = PostApi.wpInsertPost(args);
     return Post.get(id);
   }
+
+  public inline function getFilteredContent():String
+    return PluginApi.applyFilters('the_content', 
+      PluginApi.applyFilters('get_the_content', this.content)
+    );
 
   public inline function insert()
     return PostApi.wpInsertPost(this).toOutcome();

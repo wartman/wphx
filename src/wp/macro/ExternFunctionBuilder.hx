@@ -9,7 +9,7 @@ using wp.util.Util;
 
 class ExternFunctionBuilder {
 
-  public static function build() {
+  public static function build(?namespace:String) {
     var fields:Array<Field> = Context.getBuildFields();
 
     return fields.map(function (field) switch (field.kind) {
@@ -24,6 +24,7 @@ class ExternFunctionBuilder {
         if (meta != null) return field;
 
         var target = field.name;
+        if (namespace != null) target = '\\' + namespace + '\\' + target;
         var args:Array<Expr> = f.args.map(function (a) {
           return { expr: EConst(CIdent(a.name)), pos: field.pos };
         });
@@ -31,7 +32,7 @@ class ExternFunctionBuilder {
         args.unshift({ expr: EConst(CString(code)), pos: field.pos });
         f.expr = macro return cast php.Syntax.code($a{args});
         
-        field.name = target.toCammelCase();
+        field.name = field.name.toCammelCase();
         field.access = [ AStatic, AInline, APublic ];
         
         return field;
