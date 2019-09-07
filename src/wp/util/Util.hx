@@ -1,9 +1,10 @@
 package wp.util;
 
-import haxe.extern.EitherType;
-import wp.WpError;
+#if !macro
+  import haxe.extern.EitherType;
 
-using tink.CoreApi;
+  using tink.CoreApi;
+#end
 
 class Util {
 
@@ -11,7 +12,7 @@ class Util {
     return macro {
       php.Syntax.code('ob_start()');
       $e;
-      return php.Syntax.code('ob_end_flush()');
+      php.Syntax.code('ob_end_flush()');
     }
   }
 
@@ -29,11 +30,15 @@ class Util {
     return first + out;
   }
 
-  public static function toOutcome<T>(either:EitherType<T, WpError>):Outcome<T, WpError> {
-    if (Std.is(either, WpError)) {
-      return Failure(either);
+  #if !macro
+
+    public static function toOutcome<T>(either:EitherType<T, WpError>):Outcome<T, WpError> {
+      if (Std.is(either, wp.WpError)) {
+        return Failure(either);
+      }
+      return Success(either);
     }
-    return Success(either);
-  }
+
+  #end
 
 }
