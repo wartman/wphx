@@ -27,7 +27,7 @@ extern class PluginApi implements Api {
   function wp_register_plugin_realpath(file:String):Bool;
   function plugin_dir_path(file:String):String;
   function plugin_dir_url(file:String):String;
-  function register_activation_hool(file:String, cb:Dynamic):Void;
-  function register_deactivation_hool(file:String, cb:Dynamic):Void;
-  function register_uninstall_hool(file:String, cb:Dynamic):Void;
+  function register_activation_hook(file:String, cb:Dynamic):Void;
+  function register_deactivation_hook(file:String, cb:Dynamic):Void;
+  function register_uninstall_hook(file:String, cb:Dynamic):Void;
 }

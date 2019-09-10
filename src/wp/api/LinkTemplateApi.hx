@@ -33,22 +33,22 @@ class LinkTemplateApi implements Api {
   function get_edit_term_link(term_id:Int, taxonomy:String = '', object_type:String = ''):Null<String>;
   function edit_term_link(link:String = '', before:String = '', after:String = '', ?term:Term, echo:Bool = false):Null<String>;
   function get_search_link(query:String = ''):String;
-  // function get_search_feed_link($search_query = '', $feed = '')
-  // function get_search_comments_feed_link($search_query = '', $feed = '')
-  // function get_post_type_archive_link( $post_type )
-  // function get_post_type_archive_feed_link( $post_type, $feed = '' )
-  // function get_preview_post_link( $post = null, $query_args = array(), $preview_link = '' )
-  // function get_edit_post_link( $id = 0, $context = 'display' )
-  // function edit_post_link( $text = null, $before = '', $after = '', $id = 0, $class = 'post-edit-link' )
-  // function get_delete_post_link( $id = 0, $deprecated = '', $force_delete = false )
-  // function get_edit_comment_link( $comment_id = 0 )
-  // function edit_comment_link( $text = null, $before = '', $after = '' )
-  // function get_edit_bookmark_link( $link = 0 )
-  // function edit_bookmark_link( $link = '', $before = '', $after = '', $bookmark = null )
-  // function get_edit_user_link( $user_id = null )
-  // function get_previous_post( $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' )
-  // function get_next_post( $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' )
-  // function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previous = true, $taxonomy = 'category' )
+  function get_search_feed_link(search_query:String = '', feed:String = ''):String;
+  function get_search_comments_feed_link(search_query:String = '', feed:String = ''):String;
+  function get_post_type_archive_link(post_type:String):EitherType<String, Bool>;
+  function get_post_type_archive_feed_link(post_type:String, feed:String = ''):EitherType<String, Bool>;
+  function get_preview_post_link(post:PostOrId = null, query_args:NativeStructArray<Dynamic>, preview_link:String = ''):Null<String>;
+  function get_edit_post_link(id:PostOrId = 0, context:String = 'display'):Null<String>;
+  function edit_post_link(text:String = null, before:String = '', after:String = '', id:PostOrId = 0, clss:String = 'post-edit-link'):Void;
+  function get_delete_post_link(id:PostOrId = 0, deprecated:String = '', force_delete:Bool = false):String;
+  function get_edit_comment_link(comment_id:EitherType<Comment, Int> = 0):String;
+  function edit_comment_link(text:String = null, before:String = '', after:String = ''):Void;
+  function get_edit_bookmark_link(link:EitherType<Int, Dynamic> = 0):String;
+  function edit_bookmark_link(link:String = '', before:String = '', after:String = '', bookmark:Int = null):Void;
+  function get_edit_user_link(user_id:Int = null):String;
+  function get_previous_post(in_same_term:Bool = false, excluded_terms:String = '', taxonomy:String = 'category'):Null<EitherType<Post, String>>;
+  function get_next_post(in_same_term:Bool = false, excluded_terms:String = '', taxonomy:String = 'category'):Null<EitherType<Post, String>>;
+  function get_adjacent_post(in_same_term:Bool = false, excluded_terms:EitherType<NativeArray, String> = '', previous:Bool = true, taxonomy:String = 'category'):Null<EitherType<String, Post>>;
   // function get_adjacent_post_rel_link( $title = '%title', $in_same_term = false, $excluded_terms = '', $previous = true, $taxonomy = 'category' )
   // function adjacent_posts_rel_link( $title = '%title', $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' )
   // function adjacent_posts_rel_link_wp_head()
@@ -90,7 +90,7 @@ class LinkTemplateApi implements Api {
   // function get_the_comments_pagination( $args = array() )
   // function the_comments_pagination( $args = array() )
   // function home_url( $path = '', $scheme = null )
-  // function get_home_url( $blog_id = null, $path = '', $scheme = null )
+  function get_home_url(blog_id:Int = null, path:String = '', scheme:String = null):String;
   // function site_url( $path = '', $scheme = null )
   // function get_site_url( $blog_id = null, $path = '', $scheme = null )
   // function admin_url( $path = '', $scheme = 'admin' )

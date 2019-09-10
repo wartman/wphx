@@ -116,7 +116,7 @@ abstract Query(QueryObject) from QueryObject to QueryObject {
   }
 
   public inline function iterator():Iterator<Post> {
-    return new PostIterator((this:Query));
+    return new PostIterator(this);
   }
 
 }

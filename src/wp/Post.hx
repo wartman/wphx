@@ -3,6 +3,7 @@ package wp;
 import php.NativeStructArray;
 import wp.api.PluginApi;
 import wp.api.PostApi;
+import wp.api.LinkTemplateApi;
 
 using tink.CoreApi;
 using wp.util.Util;
@@ -48,6 +49,10 @@ abstract Post(PostObject) from PostObject to PostObject {
     }
     this = new PostObject(post);
   }
+
+  public var permalink(get, never):String;
+  inline function get_permalink() 
+    return LinkTemplateApi.getPermalink(this);
 
   @:to public inline function toNativeArray():php.NativeArray
     return this.toArray();

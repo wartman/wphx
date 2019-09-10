@@ -4,11 +4,12 @@ import php.NativeStructArray;
 import haxe.extern.EitherType;
 import php.NativeArray;
 import wp.*;
+import wp.api.Types;
 
 // for wp-includes\theme.php
 extern class ThemeApi implements Api {
-  public function wp_get_themes(?args:Dynamic):NativeArray;
-  // public function wp_get_theme(?stylesheet:String, ?themeRoot:String):Theme;
+  function wp_get_themes(?args:Dynamic):NativeArray;
+  function wp_get_theme(?stylesheet:String, ?themeRoot:String):Theme;
   function wp_clean_themes_cache(clear_update_cache:Bool = true):Void;
   function is_child_theme():Bool;
   function get_stylesheet():String;
@@ -52,5 +53,28 @@ extern class ThemeApi implements Api {
   function the_header_video_url():Void;
   function get_header_video_settings():NativeArray;
   function has_custom_header():Bool;
-  // ETC. 
+  function is_header_video_active():Bool;
+  function get_custom_header_markup():String;
+  function the_custom_header_markup():Void;
+  function get_background_image():String;
+  function background_image():Void;
+  function get_background_color():String;
+  function background_color():Void;
+  function wp_custom_css_cb():Void;
+  function wp_get_custom_css_post(stylesheet:String = ''):Null<Post>;
+  function wp_get_custom_css(stylesheet:String = ''):String;
+  function wp_update_custom_css_post(css:String, args:NativeStructArray<Dynamic>):MaybeError<Post>;
+  function add_editor_style(stylesheet:String = 'editor-style.css'):Void;
+  function remove_editor_styles():Bool;
+  function get_editor_stylesheets():NativeArray;
+  function get_theme_starter_content():NativeArray;
+  function add_theme_support(feature:String, args:haxe.extern.Rest<Dynamic>):Bool;
+  function get_theme_support(feature:String):NativeArray;
+  function remove_theme_support(feature:String):Bool;
+  function current_theme_supports(feature:String):Bool;
+  function require_if_theme_supports(feature:String, include:String):Bool;
+  function check_theme_switched():Void;
+  function wp_customize_url(stylesheet:String = null):String;
+  function wp_customize_support_script():Void;
+  function is_customize_preview():Bool;
 }
