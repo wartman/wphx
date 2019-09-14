@@ -1,103 +1,82 @@
 package wp;
 
-import php.NativeStructArray;
-import wp.api.PluginApi;
-import wp.api.PostApi;
-import wp.api.LinkTemplateApi;
+import php.*;
+import haxe.extern.EitherType;
+import wp.extern.*;
+import wp.extern.Post as WpPost;
+import wp.util.PossibleError;
 
-using tink.CoreApi;
-using wp.util.Util;
-
-@:native('WP_Post')
-extern class PostObject {
-
-  @:native('get_instance') public static function getInstance(id:Int):Post;
-
-  @:native('ID') public var id:Int;
-  @:native('post_author') public var author:String;
-  @:native('post_name') public var name:String;
-  @:native('post_type') public var type:String;
-  @:native('post_title') public var title:String;
-  @:native('post_date') public var date:String;
-  @:native('post_date_gmt') public var dateGmt:String;
-  @:native('post_content') public var content:String;
-  @:native('post_excerpt') public var excerpt:String;
-  @:native('post_status') public var status:String;
-  @:native('comment_status') public var commentStatus:String;
-  @:native('ping_status') public var pingStatus:String;
-  @:native('post_password') public var password:String;
-  @:native('post_parent') public var parent:Int;
-  @:native('post_modified') public var modified:String;
-  @:native('post_modified_gmt') public var modifiedGmt:String;
-  @:native('comment_count') public var commentCount:String; // Numeric string
-  @:native('menu_order') public var menuOrder:String;
-
-  public function new(post:Dynamic);
-
-  public function filter(filter:String):Dynamic;
-
-  @:native('to_array') public function toArray():php.NativeArray;
-
-}
+using php.Lib;
+using wp.util.OutcomeTools;
 
 @:forward
-abstract Post(PostObject) from PostObject to PostObject {
-
+abstract Post(WpPost) to WpPost from WpPost {
+  
   public function new(?post:Dynamic) {
     if (post == null) {
       post = {};
     }
-    this = new PostObject(post);
+    this = new WpPost(post);
   }
 
   public var permalink(get, never):String;
   inline function get_permalink() 
     return LinkTemplateApi.getPermalink(this);
 
-  @:to public inline function toNativeArray():php.NativeArray
+  @:to public inline function toNativeArray():php.NativeArray {
     return this.toArray();
-
-  public static function get(id:Int):Outcome<Post, WpError> {
-    var post = PostApi.getPost(id);
-    return post == null ? Failure(new WpError(404, 'No post found for ${id}')) : Success(post);
   }
 
-  public static inline function all()
-    return PostApi.getPosts();
+  public static function get(id:Int):PossibleError<Post> {
+    var post:WpPost = PostApi.getPost(id);
+    if (post == null) {
+      return new Error(404, 'No post found for the id ${id}');
+    }
+    return post;
+  }
+
+  public static inline function all():Array<Post> {
+    return PostApi.getPosts({}).toHaxeArray().map(p -> (p:Post));
+  }
 
   // todo: make an extern for query args
-  public static inline function find(args:NativeStructArray<Dynamic>) 
-    return PostApi.getPosts(args);
-
-  public static function add(args) {
-    var id = PostApi.wpInsertPost(args);
-    return Post.get(id);
+  public static inline function find(args:NativeStructArray<Dynamic>):Array<Post> {
+    return PostApi.getPosts(args).toHaxeArray().map(p -> (p:Post));
   }
 
-  public inline function getFilteredContent():String
+  public static inline function add(args):Post {
+    var id = PostApi.wpInsertPost(args);
+    return Post.get(id).sure();
+  }
+
+  public inline function getFilteredContent():String {
     return PluginApi.applyFilters('the_content', 
       PluginApi.applyFilters('get_the_content', this.content)
     );
+  }
 
-  public inline function insert()
-    return PostApi.wpInsertPost(this).toOutcome();
+  public inline function insert():PossibleError<Int> {
+    return PostApi.wpInsertPost(this);
+  }
 
-  public inline function update()
-    return PostApi.wpUpdatePost(this).toOutcome();
+  public inline function update():PossibleError<Int> {
+    return PostApi.wpUpdatePost(this);
+  }
 
-  public inline function remove(forceDelete:Bool = false)
-    return PostApi.wpDeletePost(this.id, forceDelete);
+  public inline function remove(forceDelete:Bool = false):PossibleError<Post> {
+    return generateErrorIfNotFound(PostApi.wpDeletePost(this.id, forceDelete));
+  }
 
-  public inline function trash()
-    return PostApi.wpTrashPost(this.id);
+  public inline function trash():PossibleError<Post>
+    return generateErrorIfNotFound(PostApi.wpTrashPost(this.id));
 
-  public inline function untrash()
-    return PostApi.wpUntrashPost(this.id);
+  public inline function untrash():PossibleError<Post>
+    return generateErrorIfNotFound(PostApi.wpUntrashPost(this.id));
 
-  public function exists()
+  public function exists():Bool
     return this.id != null && PostApi.getPost(this.id) != null;
 
-  public inline function isPublished()
+  public inline function isPublished():Bool
     return this.status == 'published';
 
   public inline function markPublished() {
@@ -105,20 +84,48 @@ abstract Post(PostObject) from PostObject to PostObject {
     return this;
   }
 
-  public inline function getMeta(key:String, ?single:Bool = true)
-    return PostApi.getPostMeta(this.id, key, single).toOutcome();
+  public inline function getComments() {
+    // hm
+  }
 
-  public inline function addMeta(key:String, value:Dynamic, ?unique:Bool = false)
-    return PostApi.addPostMeta(this.id, key, value, unique);
+  public inline function getMeta<T>(key:String):Meta<T> {
+    return Meta.get(MPost, this.id, key);
+  }
 
-  // public var meta(get, never):Meta;
-  // public function get_meta()
-  //   return new Meta('post', this.id);
+  public inline function findMeta<T>(key:String):Array<Meta<T>> {
+    return Meta.find(MPost, this.id, key);
+  }
 
-  public var postType(get, never):PostType; 
-  public inline function get_postType():PostType
+  public function addMeta<T>(key:String, value:T, ?unique:Bool = false):Bool {
+    var meta = new Meta(MPost, key, this.id, value, unique);
+    if (meta.exists()) {
+      return meta.update();
+    }
+    return meta.insert();
+  }
+
+  public inline function getPostType():PostType {
     return PostApi.getPostTypeObject(this.type);
+  }
+
+  public function getTerms(taxonomy:String, args:NativeStructArray<Dynamic>):PossibleError<Array<Term>> {
+    var terms = PostApi.wpGetPostTerms(this.id, taxonomy, args);
+    if (Std.is(terms, Error)) {
+      var t:Error = terms;
+      return t;
+    }
+    var t:php.NativeArray = terms;
+    return t.toHaxeArray().map(t -> (t:Term));
+  }
 
   // todo: add attachments
+
+  function generateErrorIfNotFound(post:EitherType<Post, Bool>):PossibleError<Post> {
+    if (Std.is(post, WpPost)) {
+      var p:Post = post;
+      return p;
+    }
+    return new Error(404, 'Post could not be found');
+  }
 
 }

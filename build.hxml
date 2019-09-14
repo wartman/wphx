@@ -1,6 +1,13 @@
--main Main
 -cp src
 
--lib tink_core
+--each
 
+-main Main
 -php dist\lib
+
+--next
+
+-lib hxnodejs
+
+-main WpParser
+-js dist\parser.js

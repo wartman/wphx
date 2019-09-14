@@ -5,7 +5,7 @@ import haxe.macro.Context;
 
 using Lambda;
 using haxe.macro.Tools;
-using wp.util.Util;
+using wp.parser.NameTools;
 
 class ExternFunctionBuilder {
 

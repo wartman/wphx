@@ -1,15 +1,16 @@
-using Wp;
+import wp.Action;
+import wp.Post;
+import wp.PostType;
+import wp.Query;
+import wp.Theme;
+
 using Lambda;
-
-import wp.api.GeneralTemplateApi;
-
-using tink.CoreApi;
+using wp.util.OutcomeTools;
 
 class Main {
 
   public static function main() {
-    var init = new Action('init');
-    init.add(_ -> {
+    Theme.init.add(_ -> {
       PostType.add('foo', {
         'public': true,
         'labels': {
@@ -40,12 +41,19 @@ class Main {
         var p:Post = Post.add({
           'post_title': 'bar',
           'post_content': '<p>Yay!</p>'
-        }).sure().markPublished();
+        }).markPublished();
         p.addMeta('foo', 'bar');
         var foo = p.getMeta('foo');
       }
 
     });
+
+    var q = new Query({
+      posts_per_page: 12
+    });
+    for (post in q) {
+      trace(post);
+    }
   }
 
 }

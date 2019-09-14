@@ -1,33 +1,40 @@
 package wp;
 
-import wp.api.MetaApi;
+import wp.extern.MetaApi;
 
-typedef MetaObject = {
+enum abstract MetaKind(String) from String to String {
+  var MUser = 'user';
+  var MPost = 'post';
+  var MComment = 'comment';
+  var MTaxonomy = 'taxonomy';
+}
+
+typedef MetaObject<T> = {
   kind:MetaKind,
   key:String,
   objectId:Int,
-  value:Dynamic,
+  value:T,
   unique:Bool
 };
 
 @:forward
-abstract Meta(MetaObject) from MetaObject to MetaObject {
+abstract Meta<T>(MetaObject<T>) from MetaObject<T> to MetaObject<T> {
 
-  public static inline function add(meta:Meta) {
+  public static inline function add<T>(meta:Meta<T>) {
     MetaApi.addMetadata(meta.kind, meta.objectId, meta.key, meta.value, meta.unique);
   }
 
-  public static function get(kind:MetaKind, objectId:Int, key:String):Meta {
+  public static function get<T>(kind:MetaKind, objectId:Int, key:String):Meta<T> {
     var value = MetaApi.getMetadata(kind, objectId, key, true);
     return new Meta(kind, key, objectId, value, false);
   }
 
-  public static function find(kind:MetaKind, objectId:Int, key:String):Array<Meta> {
+  public static function find<T>(kind:MetaKind, objectId:Int, key:String):Array<Meta<T>> {
     var values:Array<Dynamic> = MetaApi.getMetadata(kind, objectId, key, false);
     return values.map(value -> new Meta(kind, key, objectId, value, false));
   }
 
-  public function new(kind:MetaKind, key:String, objectId:Int, value:String, unique:Bool) {
+  public function new(kind:MetaKind, key:String, objectId:Int, value:T, unique:Bool) {
     this = {
       kind: kind,
       key: key,
@@ -37,16 +44,16 @@ abstract Meta(MetaObject) from MetaObject to MetaObject {
     };
   }
 
-  public function insert()
+  public inline function insert()
     return MetaApi.addMetadata(this.kind, this.objectId, this.key, this.value, this.unique);
 
-  public function update()
+  public inline function update()
     return MetaApi.updateMetadata(this.kind, this.objectId, this.key, this.value);
 
-  public function remove()
+  public inline function remove()
     return MetaApi.deleteMetadata(this.kind, this.objectId, this.key, this.value);
 
-  public function exists()
+  public inline function exists()
     return MetaApi.metadataExists(this.kind, this.objectId, this.key);
 
 }

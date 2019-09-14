@@ -1,6 +1,6 @@
 package wp;
 
-using wp.api.PluginApi;
+using wp.extern.PluginApi;
 
 abstract Action(String) from String to String {
 

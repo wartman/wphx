@@ -1,6 +1,6 @@
 package wp;
 
-import wp.api.PluginApi;
+import wp.extern.PluginApi;
 
 abstract Plugin(String) {
 
