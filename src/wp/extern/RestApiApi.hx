@@ -19,7 +19,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return bool True on success, false on error.
     
   **/
-  public function register_rest_route(namespace:String, route:String, ?args:php.NativeStructArray<Dynamic>, override:Bool = false):Bool;
+  public function register_rest_route(namespace:String, route:String, ?args:php.NativeStructArray<Dynamic>, override_:Bool = false):Bool;
   /**
     
      Registers a new field on an existing WordPress object type.

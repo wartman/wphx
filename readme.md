@@ -3,4 +3,4 @@ WpHx
 
 An incomplete attempt to have some sort of Haxe externs for WordPress
 
-(Note: this crazy hand-coded thing should be replaced by some sort of generator, probably using phpdoc output. ToDo).
+> Note: The generator I'm using is rather primitive and created a lot of broken code. That said, most of the important stuff -- Posts, Users, etc. -- DO work, and you can sorta get a Wordpress theme off the ground with this.

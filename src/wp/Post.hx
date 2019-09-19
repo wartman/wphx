@@ -84,8 +84,13 @@ abstract Post(WpPost) to WpPost from WpPost {
     return this;
   }
 
-  public inline function getComments() {
-    // hm
+  public inline function getComments(args:Dynamic):Array<Comment> {
+    Reflect.setField(args, 'post_id', this.id);
+    return [ for (c in (CommentApi.getComments(cast args.associativeArrayOfObject()):NativeArray)) c ];
+  }
+
+  public inline function getApprovedComments():Array<Comment> {
+    return [ for (c in (CommentApi.getApprovedComments(this.id):NativeArray)) c ];
   }
 
   public inline function getMeta<T>(key:String):Meta<T> {

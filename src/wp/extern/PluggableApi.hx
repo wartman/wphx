@@ -239,7 +239,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
                        0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
     
   **/
-  public function check_admin_referer(action:haxe.extern.EitherType<Int, String> = , query_arg:String):haxe.extern.EitherType<Bool, Int>;
+  public function check_admin_referer(action:haxe.extern.EitherType<Int, String> = '', query_arg:String):haxe.extern.EitherType<Bool, Int>;
   /**
     
      Verifies the Ajax request to prevent processing requests external of the blog.
@@ -256,7 +256,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
                        0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
     
   **/
-  public function check_ajax_referer(action:haxe.extern.EitherType<Int, String> = , query_arg:haxe.extern.EitherType<Bool, String>, die:Bool):haxe.extern.EitherType<Bool, Int>;
+  public function check_ajax_referer(action:haxe.extern.EitherType<Int, String> = '', query_arg:haxe.extern.EitherType<Bool, String>, die:Bool):haxe.extern.EitherType<Bool, Int>;
   /**
     
      Redirects to another page.
@@ -364,7 +364,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
      @return string redirect-sanitized URL
     
   **/
-  public function wp_validate_redirect(location:String, default:String = ''):String;
+  public function wp_validate_redirect(location:String, default_:String = ''):String;
   /**
     
      Notify an author (and/or others) of a comment/trackback/pingback on a post.
@@ -452,7 +452,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
                        0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
     
   **/
-  public function wp_verify_nonce(nonce:String, action:haxe.extern.EitherType<String, Int> = ):haxe.extern.EitherType<Bool, Int>;
+  public function wp_verify_nonce(nonce:String, action:haxe.extern.EitherType<String, Int> = ''):haxe.extern.EitherType<Bool, Int>;
   /**
     
      Creates a cryptographic token tied to a specific action, user, user session,
@@ -465,7 +465,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
      @return string The token.
     
   **/
-  public function wp_create_nonce(action:haxe.extern.EitherType<String, Int> = ):String;
+  public function wp_create_nonce(action:haxe.extern.EitherType<String, Int> = ''):String;
   /**
     
      Get salt to add to hashes.
@@ -648,7 +648,7 @@ extern class PluggableApi implements wp.util.ApiFunctions {
      @return false|string `<img>` tag for the user's avatar. False on failure.
     
   **/
-  public function get_avatar(id_or_email:Dynamic, size:Int = 96, default:String = '', alt:String = '', args:php.NativeStructArray<Dynamic> = null):haxe.extern.EitherType<Bool, String>;
+  public function get_avatar(id_or_email:Dynamic, size:Int = 96, default_:String = '', alt:String = '', args:php.NativeStructArray<Dynamic> = null):haxe.extern.EitherType<Bool, String>;
   /**
     
      Displays a human readable HTML representation of the difference between two strings.

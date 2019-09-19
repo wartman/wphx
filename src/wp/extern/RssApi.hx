@@ -33,7 +33,7 @@ extern class RssApi implements wp.util.ApiFunctions {
      @return Snoopy style response
     
   **/
-  public function _fetch_remote_file(url:String, headers:php.NativeStructArray<Dynamic> = ""):Snoopy;
+  public function _fetch_remote_file(url:String, headers:php.NativeStructArray<Dynamic> = cast ""):Snoopy;
   /**
     
      Retrieve
@@ -75,7 +75,7 @@ extern class RssApi implements wp.util.ApiFunctions {
      @param int $num_items Optional. Number of items to display, default is all.
     
   **/
-  public function wp_rss(url:String, num_items:Int = ):Void;
+  public function wp_rss(url:String, num_items:Int = cast ''):Void;
   /**
     
      Display RSS items in HTML list items.

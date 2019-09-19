@@ -124,7 +124,7 @@ extern class ServicesJSON {
      @access   private
     
   **/
-  @:native("reduce_string") public function reduceString(str:):String;
+  @:native("reduce_string") public function reduceString(str:String):String;
   /**
     
      decodes a JSON string into appropriate variable
@@ -153,7 +153,7 @@ extern class ServicesJSON {
      @return integer length
     
   **/
-  @:native("strlen8") public function strlen8(<annon>:String, str:Dynamic):Int;
+  @:native("strlen8") public function strlen8(str:String):Int;
   /**
     
      Returns part of a string, interpreting $start and $length as number of bytes.
@@ -163,5 +163,5 @@ extern class ServicesJSON {
      @return integer length
     
   **/
-  @:native("substr8") public function substr8(<annon>:String, <annon>:Int, <annon>:Int, string:Dynamic, start:Dynamic, length:Dynamic = false):Int;
+  @:native("substr8") public function substr8(string:String, start:Int, length:Int = cast false):Int;
 }

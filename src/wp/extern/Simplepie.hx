@@ -42,7 +42,7 @@ extern class SimplePie {
   @:native("feed_url") public var feedUrl:String;
   /**
     
-     @var object Instance of SimplePie_File to use as a feed
+     @var object Instance of SimplePieFile to use as a feed
      @see SimplePie::set_file()
      @access private
     
@@ -287,13 +287,13 @@ extern class SimplePie {
   @:native("set_feed_url") public function setFeedUrl(url:haxe.extern.EitherType<String, php.NativeStructArray<Dynamic>>):Void;
   /**
     
-     Set an instance of {@see SimplePie_File} to use as a feed
+     Set an instance of {@see SimplePieFile} to use as a feed
     
-     @param SimplePie_File &$file
+     @param SimplePieFile &$file
      @return bool True on success, false on failure
     
   **/
-  @:native("set_file") public function setFile(<annon>:SimplePie_File):Bool;
+  @:native("set_file") public function setFile(file:SimplePieFile):Bool;
   /**
     
      Set the raw XML data to parse
@@ -387,7 +387,7 @@ extern class SimplePie {
      @param string $encoding Character encoding
     
   **/
-  @:native("set_input_encoding") public function setInputEncoding(encoding:String = false):Void;
+  @:native("set_input_encoding") public function setInputEncoding(encoding:String = cast false):Void;
   /**
     
      Set how much feed autodiscovery to do
@@ -412,7 +412,7 @@ extern class SimplePie {
      @return SimplePie_Registry
     
   **/
-  @:native("&get_registry") public function &getRegistry():SimplePie_Registry;
+  @:native("&get_registry") public function getRegistry():SimplePie_Registry;
   /**
     
      Set which class SimplePie uses for caching
@@ -591,7 +591,7 @@ extern class SimplePie {
      @param str $qs The query string that the value should be passed to.
     
   **/
-  @:native("set_image_handler") public function setImageHandler(page:str = false, qs:str = 'i'):Void;
+  @:native("set_image_handler") public function setImageHandler(page:String = false, qs:String = 'i'):Void;
   /**
     
      Set the limit for items returned per-feed with multifeeds

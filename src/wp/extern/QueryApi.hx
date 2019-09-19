@@ -15,7 +15,7 @@ extern class QueryApi implements wp.util.ApiFunctions {
      @return mixed Contents of the query variable.
     
   **/
-  public function get_query_var(var_:String, default:Dynamic = ''):Dynamic;
+  public function get_query_var(var_:String, default_:Dynamic = ''):Dynamic;
   /**
     
      Retrieve the currently-queried object.

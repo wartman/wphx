@@ -79,7 +79,7 @@ extern class User {
      @param int $site_id Optional Site ID, defaults to current site.
     
   **/
-  public function new(id:haxe.extern.EitherType<Int, haxe.extern.EitherType<String, haxe.extern.EitherType<Dynamic, wp.extern.User>>> = 0, name:String = '', site_id:Int = ''):Void;
+  public function new(id:haxe.extern.EitherType<Int, haxe.extern.EitherType<String, haxe.extern.EitherType<Dynamic, wp.extern.User>>> = 0, name:String = '', site_id:Int = cast ''):Void;
   /**
     
      Sets up object properties, including capabilities.
@@ -90,7 +90,7 @@ extern class User {
      @param int    $site_id Optional. The site ID to initialize for.
     
   **/
-  @:native("init") public function init(data:Dynamic, site_id:Int = ''):Void;
+  @:native("init") public function init(data:Dynamic, site_id:Int = cast ''):Void;
   /**
     
      Return only the main user fields
@@ -370,7 +370,7 @@ extern class User {
      @param int $blog_id Optional. Site ID, defaults to current site.
     
   **/
-  @:native("for_blog") public function forBlog(blog_id:Int = ''):Void;
+  @:native("for_blog") public function forBlog(blog_id:Int = cast ''):Void;
   /**
     
      Sets the site to operate on. Defaults to the current site.
@@ -382,7 +382,7 @@ extern class User {
      @param int $site_id Site ID to initialize user capabilities for. Default is the current site.
     
   **/
-  @:native("for_site") public function forSite(site_id:Int = ''):Void;
+  @:native("for_site") public function forSite(site_id:Int = cast ''):Void;
   /**
     
      Gets the ID of the site for which the user's capabilities are currently initialized.

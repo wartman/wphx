@@ -152,7 +152,7 @@ extern class Scripts {
      @return array Scripts that have been printed.
     
   **/
-  @:native("print_scripts") public function printScripts(handles:Dynamic = false, group:Int = false):php.NativeArray;
+  @:native("print_scripts") public function printScripts(handles:Dynamic = false, group:Int = cast false):php.NativeArray;
   /**
     
      Prints extra scripts of a registered script.

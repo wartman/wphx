@@ -786,7 +786,7 @@ extern class CommentApi implements wp.util.ApiFunctions {
      @return false|string False on failure, string containing URI on success.
     
   **/
-  public function discover_pingback_server_uri(url:String, deprecated:Int = ''):haxe.extern.EitherType<Bool, String>;
+  public function discover_pingback_server_uri(url:String, deprecated:Int = cast ''):haxe.extern.EitherType<Bool, String>;
   /**
     
      Perform all pingbacks, enclosures, trackbacks, and send to pingback services.
@@ -899,7 +899,7 @@ extern class CommentApi implements wp.util.ApiFunctions {
      @return IXR_Error
     
   **/
-  public function xmlrpc_pingback_error(ixr_error:IXR_Error):IXR_Error;
+//   public function xmlrpc_pingback_error(ixr_error:IXR_Error):IXR_Error;
   /**
     
      Removes a comment from the object cache.
