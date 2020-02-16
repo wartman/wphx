@@ -55,6 +55,12 @@ abstract Post(WpPost) to WpPost from WpPost {
     );
   }
 
+  public inline function getFilteredExcerpt():String {
+    return PluginApi.applyFilters('the_excerpt', 
+      PluginApi.applyFilters('get_the_excerpt', this.excerpt)
+    );
+  }
+
   public inline function insert():PossibleError<Int> {
     return PostApi.wpInsertPost(this);
   }

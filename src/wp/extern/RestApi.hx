@@ -1,6 +1,6 @@
 package wp.extern;
 
-extern class RestApiApi implements wp.util.ApiFunctions {
+extern class RestApi implements wp.util.ApiFunctions {
   /**
     
      Registers a REST API route.
@@ -152,7 +152,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Response REST response.
     
   **/
-  public function rest_do_request(request:haxe.extern.EitherType<wp.extern.RESTRequest, String>):wp.extern.RESTResponse;
+//   public function rest_do_request(request:haxe.extern.EitherType<wp.extern.RESTRequest, String>):wp.extern.RESTResponse;
   /**
     
      Retrieves the current REST server instance.
@@ -166,7 +166,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Server REST server instance.
     
   **/
-  public function rest_get_server():wp.extern.RESTServer;
+//   public function rest_get_server():wp.extern.RESTServer;
   /**
     
      Ensures request arguments are a request object (for consistency).
@@ -177,7 +177,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Request REST request instance.
     
   **/
-  public function rest_ensure_request(request:haxe.extern.EitherType<php.NativeStructArray<Dynamic>, wp.extern.RESTRequest>):wp.extern.RESTRequest;
+//   public function rest_ensure_request(request:haxe.extern.EitherType<php.NativeStructArray<Dynamic>, wp.extern.RESTRequest>):wp.extern.RESTRequest;
   /**
     
      Ensures a REST response is a response object (for consistency).
@@ -194,7 +194,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
                                     returns a new WP_REST_Response instance.
     
   **/
-  public function rest_ensure_response(response:haxe.extern.EitherType<wp.extern.Error, haxe.extern.EitherType<wp.extern.HTTPResponse, Dynamic>>):haxe.extern.EitherType<wp.extern.RESTResponse, Dynamic>;
+//   public function rest_ensure_response(response:haxe.extern.EitherType<wp.extern.Error, haxe.extern.EitherType<wp.extern.HTTPResponse, Dynamic>>):haxe.extern.EitherType<wp.extern.RESTResponse, Dynamic>;
   /**
     
      Handles _deprecated_function() errors.
@@ -245,7 +245,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Response Modified response, either response or `null` to indicate pass-through.
     
   **/
-  public function rest_handle_options_request(response:Dynamic, handler:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
+//   public function rest_handle_options_request(response:Dynamic, handler:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
   /**
     
      Sends the "Allow" header to state all methods that can be sent to the current route.
@@ -258,7 +258,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Response Response to be served, with "Allow" header if route has allowed methods.
     
   **/
-  public function rest_send_allow_header(response:wp.extern.RESTResponse, server:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
+//   public function rest_send_allow_header(response:wp.extern.RESTResponse, server:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
   /**
     
      Filter the API response to include only a white-listed set of response object fields.
@@ -272,7 +272,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_REST_Response Response to be served, trimmed down to contain a subset of fields.
     
   **/
-  public function rest_filter_response_fields(response:wp.extern.RESTResponse, server:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
+//   public function rest_filter_response_fields(response:wp.extern.RESTResponse, server:wp.extern.RESTServer, request:wp.extern.RESTRequest):wp.extern.RESTResponse;
   /**
     
      Adds the REST API URL to the WP RSD endpoint.
@@ -383,7 +383,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return WP_Error|boolean
     
   **/
-  public function rest_validate_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):haxe.extern.EitherType<wp.extern.Error, Bool>;
+//   public function rest_validate_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):haxe.extern.EitherType<wp.extern.Error, Bool>;
   /**
     
      Sanitize a request argument based on details registered to the route.
@@ -396,7 +396,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return mixed
     
   **/
-  public function rest_sanitize_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):Dynamic;
+//   public function rest_sanitize_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):Dynamic;
   /**
     
      Parse a request argument based on details registered to the route.
@@ -412,7 +412,7 @@ extern class RestApiApi implements wp.util.ApiFunctions {
      @return mixed
     
   **/
-  public function rest_parse_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):Dynamic;
+//   public function rest_parse_request_arg(value:Dynamic, request:wp.extern.RESTRequest, param:String):Dynamic;
   /**
     
      Determines if an IP address is valid.

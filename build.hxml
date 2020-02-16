@@ -2,12 +2,12 @@
 
 --each
 
--main Main
--php dist\lib
-
---next
-
 -lib hxnodejs
 
 -main WpParser
 -js dist\parser.js
+
+--next
+
+-main Main
+-php dist\lib

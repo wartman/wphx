@@ -228,7 +228,7 @@ extern class FormattingApi implements wp.util.ApiFunctions {
      @return string The encoded text with HTML entities.
     
   **/
-  public function _wp_specialchars(string:String, ?quote_style:haxe.extern.EitherType<Int, String>, charset:String = false, double_encode:Bool = false):String;
+  public function _wp_specialchars(string:String, ?quote_style:haxe.extern.EitherType<Int, String>, charset:Dynamic = false, double_encode:Bool = false):String;
   /**
     
      Converts a number of HTML entities into their special characters.
@@ -1317,7 +1317,7 @@ extern class FormattingApi implements wp.util.ApiFunctions {
      @return string Human readable time difference.
     
   **/
-  public function human_time_diff(from:Int, to:Int = ''):String;
+  public function human_time_diff(from:Int, to:Int = cast ''):String;
   /**
     
      Generates an excerpt from the content, if needed.
